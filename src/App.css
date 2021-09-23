@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+
+.bg-tooltip {
+  font-size: "14px";
+  border-radius: 50px;
+  background-color: #181a4c;
+  padding: 5px 20px;
+  min-width: 200px;
+}

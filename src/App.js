@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
+import './App.css';
 
 class App extends Component {
   constructor(props) {
@@ -99,7 +100,8 @@ class App extends Component {
         ),
         marker: {
           enabled: one.note !== "" ? true : false
-        }
+        },
+        name: one.note
       };
     });
     this.chartOptions = {
@@ -168,6 +170,26 @@ class App extends Component {
 
         }
       },
+      tooltip: {
+        backgroundColor: "transparent",
+        borderWidth: 0,
+        borderRadius: 0,
+        shadow: false,
+        padding: 0,
+        style: {
+          color: "#fff"
+        },
+        formatter: function() {
+          var point_date = new Date(this.point.x);
+          var date_str = point_date.toLocaleString('default', {month: 'long'})
+                         + " " + point_date.toLocaleString('default', {day: 'numeric'})
+                         + "th, " + point_date.toLocaleString('default', {year: 'numeric'});
+          return '<div class="bg-tooltip">'
+                + '<div style="font-size:14px;">' + date_str + '</div>' 
+                + '<div style="font-size:12px;">' +  this.point.name + '</div>' + '</div>';
+        },
+        useHTML: true
+      },  
       series: [{
         data: this.seriesData
       }]
