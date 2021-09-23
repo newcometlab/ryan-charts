@@ -2,20 +2,16 @@ import React, { Component } from "react";
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 
-const options = {
-  title: {
-    text: 'My chart'
-  },
-  series: [{
-    data: [1, 2, 3]
-  }]
-}
-
 class App extends Component {
   constructor(props) {
     super(props);
 
-    this.seriesData = [
+    this.rawData = [
+      {
+        date: "2020-10-20",
+        score: 0,
+        note: ""
+      },
       {
         date: "2020-10-21",
         score: 0,
@@ -93,6 +89,90 @@ class App extends Component {
       },
     ];
 
+    this.seriesData = this.rawData.map(one => {
+      return {
+        y: one.score,
+        x: Date.UTC(
+          parseInt(one.date.substring(0, 4)),
+          parseInt(one.date.substring(5, 7)) - 1,
+          parseInt(one.date.substring(8, 10))
+        ),
+        marker: {
+          enabled: one.note !== "" ? true : false
+        }
+      };
+    });
+    this.chartOptions = {
+      chart: {
+        height: 200,
+        type: 'spline',
+        events: {
+          load: function() {
+            var chart = this;
+            chart.update({
+              plotOptions: {
+                series: {
+                  color: {
+                    linearGradient: [0, "-10%", 0, '90%']
+                  }
+                }
+              }
+            });
+          }
+        }
+      },
+      title: {
+        text: ''
+      },
+      credits: {
+        enabled: false
+      },
+      legend: {
+        enabled: false
+      },
+      yAxis: {
+        title: {
+          text: ''
+        },
+        min: -10,
+        max: 10
+      },
+      xAxis: {
+        type: 'datetime',
+        labels: {
+          formatter: function() {
+            return Highcharts.dateFormat('%e', this.value);
+          }
+        },
+      },
+      plotOptions: {
+        spline: {
+          lineWidth: 5,
+          marker: {
+            lineColor: '#fff',
+            lineWidth: 3,
+            radius: 6
+          },
+        },
+        series: {
+          color: {
+            linearGradient: [0, 0, 0, 0],
+            stops: [
+              [0.00, '#57e50b'],
+              [0.4, '#defe66'],
+              [0.5, '#d7d8ff'],
+              [0.6, '#ffdb6d'],
+              [1.00, '#ff0000']
+            ]
+          }
+
+        }
+      },
+      series: [{
+        data: this.seriesData
+      }]
+    }
+
   }
 
   render() {
@@ -100,7 +180,7 @@ class App extends Component {
       <div className="app">
         <HighchartsReact
           highcharts={Highcharts}
-          options={options}
+          options={this.chartOptions}
         />
       </div>
     );
