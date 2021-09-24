@@ -22,7 +22,7 @@
   justify-content: center;
   font-size: 20px;
   color: white;
-  margin-bottom: 100px;
+  margin-bottom: 50px;
 }
 
 .App-link {
@@ -44,4 +44,10 @@
   background-color: #181a4c;
   padding: 5px 20px;
   min-width: 200px;
+}
+
+.radial-chart {
+  width: 40%;
+  margin: 0 auto;
+  height: 100%;
 }

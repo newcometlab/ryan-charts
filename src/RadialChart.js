@@ -10,10 +10,27 @@ class RadialChart extends Component {
   constructor(props) {
     super(props);
 
+    this.seriesData = 67;
+    let chartImage = null;
     this.chartOptions = {
         chart: {
             type: 'solidgauge',
-            plotBackgroundImage: '../images/man.png'
+            backgroundColor: 'transparent',
+            margin: 0,
+            spacing: 0,
+            events: {
+              load: function () {
+                let plot_scale = this.plotWidth > this.plotHeight ? this.plotHeight : this.plotWidth;
+                chartImage = this.renderer.image('../images/man.png', (this.plotWidth - plot_scale) / 2, (this.plotHeight - plot_scale) / 2, plot_scale, plot_scale).add();
+              },
+              redraw: function() {
+                if (chartImage !== null) {
+                  let plot_scale = this.plotWidth > this.plotHeight ? this.plotHeight : this.plotWidth;
+                  chartImage.destroy();
+                  chartImage = this.renderer.image('../images/man.png', (this.plotWidth - plot_scale) / 2, (this.plotHeight - plot_scale) / 2, plot_scale, plot_scale).add();
+                }
+              }
+            }
           },
           title: null,
           pane: {
@@ -22,7 +39,7 @@ class RadialChart extends Component {
             startAngle: -130,
             endAngle: 130,
             background: {
-              borderWidth: 54,
+              borderWidth: "12%",
               backgroundColor: '#8b8ca5',
               shape: 'arc',
               borderColor: '#8b8ca5',
@@ -62,9 +79,9 @@ class RadialChart extends Component {
           },
           series: [{
             name: 'overall wellbeing',
-            data: [70],
+            data: [this.seriesData],
             dataLabels: {
-              format: '<div style="text-align:center;font-size:30px;color:#333951;line-height: 1.1;"><div style="text-align:center;">Overall</div style="text-align:center;"><div>Wellbeing</div></div>'
+              format: '<div style="text-align:center;font-size:5vh;color:#333951;line-height: 1.1;"><div style="text-align:center;">Overall</div style="text-align:center;"><div>Wellbeing</div></div>'
             }
           }]
     }
@@ -92,7 +109,6 @@ class RadialChart extends Component {
   }
 
     componentDidMount() {
-        console.log(document);
         let svg = document.getElementsByTagName('svg');
         if (svg.length > 0) {
           let path = svg[0].getElementsByTagName('path');
@@ -104,8 +120,7 @@ class RadialChart extends Component {
 
   render() {
     return (
-        <div
-        style={{width:"400px", height:"400px", margin: "0 auto"}}>            
+        <div className="radial-chart">            
             <HighchartsReact
               highcharts={Highcharts}
               options={this.chartOptions}
