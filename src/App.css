@@ -47,7 +47,22 @@
 }
 
 .radial-chart {
-  width: 40%;
+  width: 50%;
   margin: 0 auto;
   height: 100%;
 }
+/* @media (min-width: 768px) {
+  .radial-chart {
+    width: 60%;
+  }
+}
+@media (min-width: 992px) {
+  .radial-chart {
+    width: 50%;
+  }
+}
+@media (min-width: 1200px) {
+  .radial-chart {
+    width: 40%;
+  }
+} */

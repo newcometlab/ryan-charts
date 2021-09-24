@@ -12,6 +12,8 @@ class RadialChart extends Component {
 
     this.seriesData = 67;
     let chartImage = null;
+    let chartLabel1 = null;
+    let chartLabel2 = null;
     this.chartOptions = {
         chart: {
             type: 'solidgauge',
@@ -22,12 +24,42 @@ class RadialChart extends Component {
               load: function () {
                 let plot_scale = this.plotWidth > this.plotHeight ? this.plotHeight : this.plotWidth;
                 chartImage = this.renderer.image('../images/man.png', (this.plotWidth - plot_scale) / 2, (this.plotHeight - plot_scale) / 2, plot_scale, plot_scale).add();
+                chartLabel1 = this.renderer.text('Overall', (this.plotWidth / 2 - plot_scale * 0.14), (this.plotHeight + plot_scale * 0.7) / 2)
+                  .css({
+                    fontSize: plot_scale * 0.08 + 'px',
+                    color: '#333951',
+                    fontWeight: '900'
+                  })
+                  .add();
+                chartLabel2 = this.renderer.text('Wellbeing', (this.plotWidth / 2 - plot_scale * 0.19), (this.plotHeight + plot_scale * 0.7) / 2 + plot_scale * 0.1)
+                  .css({
+                    fontSize: plot_scale * 0.08 + 'px',
+                    color: '#333951',
+                    fontWeight: '900'
+                  })
+                  .add();
               },
               redraw: function() {
                 if (chartImage !== null) {
                   let plot_scale = this.plotWidth > this.plotHeight ? this.plotHeight : this.plotWidth;
                   chartImage.destroy();
                   chartImage = this.renderer.image('../images/man.png', (this.plotWidth - plot_scale) / 2, (this.plotHeight - plot_scale) / 2, plot_scale, plot_scale).add();
+                  chartLabel1.destroy();
+                  chartLabel1 = this.renderer.text('Overall', (this.plotWidth / 2 - plot_scale * 0.14), (this.plotHeight + plot_scale * 0.7) / 2)
+                    .css({
+                      fontSize: plot_scale * 0.08 + 'px',
+                      color: '#333951',
+                      fontWeight: '900'
+                    })
+                    .add();
+                  chartLabel2.destroy();
+                  chartLabel2 = this.renderer.text('Wellbeing', (this.plotWidth / 2 - plot_scale * 0.19), (this.plotHeight + plot_scale * 0.7) / 2 + plot_scale * 0.1)
+                    .css({
+                      fontSize: plot_scale * 0.08 + 'px',
+                      color: '#333951',
+                      fontWeight: '900'
+                    })
+                    .add();
                 }
               }
             }
@@ -68,9 +100,7 @@ class RadialChart extends Component {
               linecap: 'round',
               rounded: true,
               dataLabels: {
-                y: 100,
-                borderWidth: 0,
-                useHTML: true
+                enabled: false
               }
             }
           },
@@ -79,10 +109,7 @@ class RadialChart extends Component {
           },
           series: [{
             name: 'overall wellbeing',
-            data: [this.seriesData],
-            dataLabels: {
-              format: '<div style="text-align:center;font-size:5vh;color:#333951;line-height: 1.1;"><div style="text-align:center;">Overall</div style="text-align:center;"><div>Wellbeing</div></div>'
-            }
+            data: [this.seriesData]
           }]
     }
 
