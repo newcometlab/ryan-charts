@@ -2,6 +2,16 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## ScreenShots
+
+### Line Chart
+
+<img src="images/Screenshot_1.png">
+
+### Radial Chart
+
+<img src="images/Screenshot_2.png">
+
 ## Available Scripts
 
 In the project directory, you can run:
