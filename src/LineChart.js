@@ -170,20 +170,20 @@ class LineChart extends Component {
 				}
 			},
 			tooltip: {
-				backgroundColor: "transparent",
+				backgroundColor: "#181a4c",
+				borderColor: "#181a4c",
 				borderWidth: 0,
-				borderRadius: 0,
+				borderRadius: 35,
 				shadow: false,
 				padding: 0,
 				style: {
 					color: "#fff"
 				},
 				formatter: function() {
-					var point_date = new Date(this.point.x);
-					var date_str = point_date.toLocaleString('default', {month: 'long'})
-												 + " " + point_date.toLocaleString('default', {day: 'numeric'})
-												 + "th, " + point_date.toLocaleString('default', {year: 'numeric'});
-					return '<div class="bg-tooltip">'
+					var date_str = Highcharts.dateFormat('%B', this.point.x)
+												 + " " + Highcharts.dateFormat('%e', this.point.x)
+												 + "th, " + Highcharts.dateFormat('%Y', this.point.x);
+					return '<div class="bg-tooltip">'// 
 								+ '<div style="font-size:14px;">' + date_str + '</div>' 
 								+ '<div style="font-size:12px;">' +  this.point.name + '</div>' + '</div>';
 				},
