@@ -29,6 +29,9 @@ class LineChart2 extends Component {
 		const seriesData = rawData.map(one => one.value);
 
 		this.chartOptions = {
+			chart: {
+				marginRight: 20
+			},
 			title: {
 				text: ''
 			},
@@ -45,7 +48,7 @@ class LineChart2 extends Component {
 					}
 				},
 				plotLines: [{
-					value: 0.2,
+					value: 0,
 					color: '#d5dae0',
 					width: 5
 				}]
@@ -116,7 +119,7 @@ class LineChart2 extends Component {
 
 	render() {
 		return (
-			<div style={{width:'60%', marginLeft:'auto', marginRight:'auto'}}>
+			<div style={{width: global.window.innerWidth <= 500 ? '90%' : '60%', marginLeft:'auto', marginRight:'auto'}}>
 				<HighchartsReact
 					highcharts={Highcharts}
 					options={this.chartOptions}
