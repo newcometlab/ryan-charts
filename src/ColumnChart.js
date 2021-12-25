@@ -80,7 +80,7 @@ class ColumnChart extends Component {
 
 		const seriesData = Object.keys(rawData).map(key => {
 			const vv = parseInt(Math.log10(rawData[key].val));
-			return { y: vv === 0 ? 0.05 : vv, color: rawData[key].color };
+			return { y: vv === 0 ? 0.1 : vv, color: rawData[key].color };
 		});
 
 		const chartData = Object.keys(rawData).map(key => {
@@ -93,7 +93,6 @@ class ColumnChart extends Component {
 				rate: rawData[key].rate,
 			};
 		});
-		console.log(chartData);
 
 		this.chartOptions = {
 			chart: {
@@ -130,7 +129,7 @@ class ColumnChart extends Component {
 							+ (this.value === 0 ? "" : "10<sup>" + this.value + "</sup>")
 							+ "</span>"
 					}
-				},				
+				},
 				gridLineColor: '#fff'
 			},
 			plotOptions: {

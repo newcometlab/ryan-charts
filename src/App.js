@@ -4,6 +4,7 @@ import './App.css';
 import LineChart from "./LineChart";
 import RadialChart from "./RadialChart";
 import ColumnChart from "./ColumnChart";
+import LineChart2 from "./LineChart2";
 
 class App extends Component {
   render() {
@@ -29,12 +30,19 @@ class App extends Component {
             >
               ColumnChart
             </Link>
+            <Link
+              className="App-link"
+              to="/linechart2"
+            >
+              LineChart2
+            </Link>
           </header>
           <Switch>
             <Route path="/linechart" component={LineChart} />
             <Route path="/radialchart" component={RadialChart} />
             <Route path="/columnchart" component={ColumnChart} />
-            <Route path="/" component={LineChart} />
+            <Route path="/linechart2" component={LineChart2} />
+            <Route path="/" component={ColumnChart} />
           </Switch>
         </BrowserRouter>
       </div>
