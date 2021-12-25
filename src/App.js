@@ -3,6 +3,7 @@ import { BrowserRouter, Switch , Route, Link } from "react-router-dom";
 import './App.css';
 import LineChart from "./LineChart";
 import RadialChart from "./RadialChart";
+import ColumnChart from "./ColumnChart";
 
 class App extends Component {
   render() {
@@ -22,10 +23,17 @@ class App extends Component {
             >
               RadialChart
             </Link>
+            <Link
+              className="App-link"
+              to="/columnchart"
+            >
+              ColumnChart
+            </Link>
           </header>
           <Switch>
             <Route path="/linechart" component={LineChart} />
             <Route path="/radialchart" component={RadialChart} />
+            <Route path="/columnchart" component={ColumnChart} />
             <Route path="/" component={LineChart} />
           </Switch>
         </BrowserRouter>
