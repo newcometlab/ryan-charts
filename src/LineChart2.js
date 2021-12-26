@@ -51,7 +51,7 @@ class LineChart2 extends Component {
 				plotLines: [{
 					value: 0,
 					color: '#d5dae0',
-					width: 5
+					width: 3
 				}]
 			},
 		
@@ -84,7 +84,7 @@ class LineChart2 extends Component {
                             y2: 1
                         },
                         stops: [
-                            [0, "#8591a3"],
+                            [0, "#9dadc3"],
                             [1, "transparent"]
                         ]
                     },
