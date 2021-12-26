@@ -47,6 +47,7 @@ class LineChart2 extends Component {
 						fontSize: 14
 					}
 				},
+				gridLineColor: '#d5dae0',
 				plotLines: [{
 					value: 0,
 					color: '#d5dae0',
@@ -84,7 +85,7 @@ class LineChart2 extends Component {
                         },
                         stops: [
                             [0, "#8591a3"],
-                            [1, "#ffffff"]
+                            [1, "transparent"]
                         ]
                     },
                     marker: {
