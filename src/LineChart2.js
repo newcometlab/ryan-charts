@@ -90,14 +90,14 @@ class LineChart2 extends Component {
                     marker: {
 						lineColor: '#fff',
 						fillColor: '#1f4273',
-						lineWidth: 3,
-						radius: 6
+						lineWidth: 5,
+						radius: 10
 					},
 					lineColor: '#1f4273',
-                    lineWidth: 5,
+                    lineWidth: 8,
                     states: {
                         hover: {
-                            lineWidth: 5
+                            lineWidth: 8
                         }
                     },
                     threshold: null

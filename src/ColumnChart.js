@@ -98,6 +98,14 @@ class ColumnChart extends Component {
 			chart: {
 				type: "column",
 				plotBackgroundColor: '#eef2f6',
+				events: {
+					load: function () {
+						this.plotBackground.attr({
+							rx: 10,
+							ry: 10
+						})
+					}
+				},
 				marginRight: 30
 			},
 			title: {
@@ -107,19 +115,22 @@ class ColumnChart extends Component {
 				categories: categories,
 				labels: {
 					style: {
-						fontSize: 14
+						fontSize: 14,
+						fontWeight: 'bold'
 					}
-				}
+				},
+				lineWidth: 0,
+				offset: 10,
 			},
 			yAxis: {
 				min: 0,
 				title: {
 					align: 'low',
-					offset: 40,
+					offset: 45,
 					useHTML: true,
 					text: "<div style='text-align:center;font-size:14px;'><div></div>Bacterial<div></div>Load</div>",
 					rotation: 0,
-					y: 0
+					y: 15
 				},
 				labels: {
 					useHTML: true,

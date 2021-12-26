@@ -185,7 +185,7 @@ class LineChart extends Component {
 												 + "th, " + Highcharts.dateFormat('%Y', this.point.x);
 					return '<div class="bg-tooltip">'// 
 								+ '<div style="font-size:14px;">' + date_str + '</div>' 
-								+ '<div style="font-size:12px;">' +  this.point.name + '</div>' + '</div>';
+								+ '<div style="font-size:12px;">' +  this.point.name + '</div></div>';
 				},
 				useHTML: true
 			},  
