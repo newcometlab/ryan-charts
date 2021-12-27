@@ -94,6 +94,9 @@ class ColumnChart extends Component {
 			};
 		});
 
+		const isSmall = global.window.innerWidth <= 640 ? true : false;
+		this.isWindowSmall = isSmall;
+
 		this.chartOptions = {
 			chart: {
 				type: "column",
@@ -106,7 +109,10 @@ class ColumnChart extends Component {
 						})
 					}
 				},
-				marginRight: 30
+				marginRight: 30,
+				style: {
+					fontFamily: 'Poppins'
+				}
 			},
 			title: {
 				text: ''
@@ -115,8 +121,8 @@ class ColumnChart extends Component {
 				categories: categories,
 				labels: {
 					style: {
-						fontSize: 14,
-						fontWeight: 'bold'
+						fontSize: 12,
+						fontWeight: 600
 					}
 				},
 				lineWidth: 0,
@@ -124,11 +130,13 @@ class ColumnChart extends Component {
 			},
 			yAxis: {
 				min: 0,
+				max: 8,
+				tickInterval: 1,
 				title: {
 					align: 'low',
-					offset: 45,
+					offset: isSmall ? 20 : 35,
 					useHTML: true,
-					text: "<div style='text-align:center;font-size:14px;'><div></div>Bacterial<div></div>Load</div>",
+					text: "<div style='text-align:center;font-size:12px;color:#828282;'><div></div>Bacterial<div></div>Load</div>",
 					rotation: 0,
 					y: 15
 				},
@@ -136,7 +144,7 @@ class ColumnChart extends Component {
 					useHTML: true,
 					step: 1,
 					formatter: function() {
-						return "<span style='font-size:14px;'>" 
+						return "<span style='font-size:12px;font-weight:600;'>" 
 							+ (this.value === 0 ? "" : "10<sup>" + this.value + "</sup>")
 							+ "</span>"
 					}
@@ -147,22 +155,23 @@ class ColumnChart extends Component {
 				column: {
 					borderRadiusTopLeft: 500,
 					borderRadiusTopRight: 500,
+					pointWidth: 30
 				},
 				series: {
 					dataLabels: {
 						enabled: true,
-						y: 0,
+						y: -5,
 						useHTML: true,
 						formatter: function () {
 							const xx = this.point.x;
 							const v_st = chartData[xx].v_st;
 							const v_nd = chartData[xx].v_nd;
 							const rate = chartData[xx].rate;
-							const bytes = "<div>"
-								+ "<div style='font-size:14px;color:#000;text-align:center;'>"
+							const bytes = "<div style='font-weight:600;'>"
+								+ "<div style='font-size:" + (v_st === 0 ? 10 : (isSmall ? 10 : 12)) + "px;color:#0B0B0B;text-align:center;'>"
 								+		(v_st === 0 ? "Not Detected" : (v_nd + "  x  10<sup>" + v_st + "</sup>"))
 								+ "</div>"
-								+ "<div style='font-size:12px;color:" + (rate > 0 ? '#f13737' : '#3aa167') + ";text-align:center;'>"
+								+ "<div style='font-size:" + (isSmall ? 8 : 10) + "px;color:" + (rate > 0 ? '#F13737' : '#219653') + ";text-align:center;'>"
 								+ 		(rate > 0 ? "+" : "") + rate.toFixed(2) +"%"
 								+ "</div>"
 								+ "</div>"
@@ -204,7 +213,7 @@ class ColumnChart extends Component {
 
 	render() {
 		return (
-			<div style={{width:'80%', marginLeft:'auto', marginRight:'auto'}}>
+			<div style={{width: this.isWindowSmall ? '100%' : '80%', marginLeft:'auto', marginRight:'auto'}}>
 				<HighchartsReact highcharts={Highcharts} options={this.chartOptions} />
 			</div>
 		);

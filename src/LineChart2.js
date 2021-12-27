@@ -28,17 +28,37 @@ class LineChart2 extends Component {
 		const categories = rawData.map(one => one.title);
 		const seriesData = rawData.map(one => one.value);
 
+		const yAxisMax = 500;
+		const yAxisMin = 0;
+
+		const isSmall = global.window.innerWidth <= 640 ? true : false;
+		this.isWindowSmall = isSmall;
+
+		const yAxisGridLines = [...Array(6).keys()].map(idx => {
+			return {
+				type: 'line',
+				lineWidth: idx === 0 ? 2 : 1,
+				opacity: idx === 0 ? 1 : 0.5,
+				zIndex: 4,
+				data: categories.map(() => idx * 100)
+			};
+		})
+
 		this.chartOptions = {
 			chart: {
-				marginRight: 20
+				marginRight: 20,
+				style: {
+					fontFamily: 'Poppins'
+				}
 			},
 			title: {
 				text: ''
 			},
 		
 			yAxis: {
-				min: 0,
-				max: 500,
+				min: yAxisMin,
+				max: yAxisMax,
+				tickInterval: 100,
 				title: {
 					text: ''
 				},
@@ -47,12 +67,7 @@ class LineChart2 extends Component {
 						fontSize: 14
 					}
 				},
-				gridLineColor: '#d5dae0',
-				plotLines: [{
-					value: 0,
-					color: '#d5dae0',
-					width: 3
-				}]
+				gridLineWidth: 0,
 			},
 		
 			xAxis: {
@@ -84,25 +99,39 @@ class LineChart2 extends Component {
                             y2: 1
                         },
                         stops: [
-                            [0, "#9dadc3"],
-                            [1, "transparent"]
+                            [0, "#82a0c0"],
+                            [1, "#ffffff"]
                         ]
                     },
                     marker: {
-						lineColor: '#fff',
-						fillColor: '#1f4273',
-						lineWidth: 5,
-						radius: 10
+						enabled: false
 					},
-					lineColor: '#1f4273',
-                    lineWidth: 8,
                     states: {
                         hover: {
-                            lineWidth: 8
+                            enabled: false
+                        },
+                        inactive: {
+                            enabled: false
                         }
                     },
+					lineWidth: 0,
                     threshold: null
                 },
+				line: {
+					lineColor: '#BAC4CF',
+					marker: {
+						enabled: false
+					},
+					enableMouseTracking: false,
+					states: {
+						hover: {
+							enabled: false
+						},
+						inactive: {
+							enabled: false
+						}
+					}
+				},
 				series: {
 					pointPlacement: "on"
 				}
@@ -110,8 +139,25 @@ class LineChart2 extends Component {
 			series: [{
 				type: 'area',
 				name: 'Orders',
-				data: seriesData
-			}],
+				data: seriesData,
+				zIndex: 2
+			}, {
+				type: 'line',
+				name: 'Orders',
+				lineColor: '#114377',
+				lineWidth: 4,
+				marker: {
+					enabled: true,
+					symbol: 'circle',
+					lineColor: '#fff',
+					fillColor: '#1f4273',
+					lineWidth: 4,
+					radius: 8
+				},
+				enableMouseTracking: true,
+				data: seriesData,
+				zIndex: 6
+			}, ...yAxisGridLines],
 			credits: {
 				enabled: false
 			},
@@ -120,7 +166,7 @@ class LineChart2 extends Component {
 
 	render() {
 		return (
-			<div style={{width: global.window.innerWidth <= 500 ? '90%' : '60%', marginLeft:'auto', marginRight:'auto'}}>
+			<div style={{width: this.isWindowSmall ? '100%' : '80%', marginLeft:'auto', marginRight:'auto'}}>
 				<HighchartsReact
 					highcharts={Highcharts}
 					options={this.chartOptions}
