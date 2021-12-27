@@ -9,88 +9,92 @@ class ColumnChart extends Component {
 	constructor(props) {
 		super(props);
 
+		const colors = {
+			"orange" : { "from" : "#FBC214", "to" : "#FC8215" },
+			"red" : { "from" : "#EF3117", "to" : "#D30D0D" },
+			"green" : { "from" : "#12E24C", "to" : "#07AE4D" },
+			"grey" : { "from" : "#787E85", "to" : "#393F3B" },
+		}
 		const rawData = {
-			"Aa": {val: 3, rate: -2.5, color: '#676d71' },
-			"Pg": {
-				val: 36000,
-				rate: 1.48,
-				color: {
-					linearGradient: {
-						x1: 0,
-						x2: 0,
-						y1: 0,
-						y2: 1
-					},
-					stops: [
-						[0, '#fbc213'],
-						[1, '#fc8215']
-					]
-				}
-			},
-			"Td": { 
-				val: 250, rate: 3.07, 
-				color: {
-					linearGradient: {
-						x1: 0,
-						x2: 0,
-						y1: 0,
-						y2: 1
-					},
-					stops: [
-						[0, '#11e14c'],
-						[1, '#06ae4d']
-					]
-				}
-			},
-			"Tf": {
-				val: 7300000,
-				rate: -2.5,
-				color: {
-					linearGradient: {
-						x1: 0,
-						x2: 0,
-						y1: 0,
-						y2: 1
-					},
-					stops: [
-						[0, '#ef3016'],
-						[1, '#d40e0d']
-					]
-				}
-			},
-			"Fn": {
-				val: 1400,
-				rate: 1.8,
-				color: {
-					linearGradient: {
-						x1: 0,
-						x2: 0,
-						y1: 0,
-						y2: 1
-					},
-					stops: [
-						[0, '#11e24c'],
-						[1, '#06ae4d']
-					]
-				}
-			},
-		};
+			"Aa": 3,
+			"Pg": 250,
+			"Td": 250,
+			"Tf": 7300000,
+			"Fn": 2800
+		  };
+
+		const rawDataRate = {
+			"Aa": -2.5,
+			"Pg": 1.48,
+			"Td": 3.07,
+			"Tf": 2.5,
+			"Fn": 1.8
+		  };
 
 		const categories = Object.keys(rawData);
 
 		const seriesData = Object.keys(rawData).map(key => {
-			const vv = parseInt(Math.log10(rawData[key].val));
-			return { y: vv === 0 ? 0.1 : vv, color: rawData[key].color };
+			const vv = rawData[key];
+			const v_st = parseInt(Math.log10(vv));
+			let color = null;
+			if (key === "Aa") {
+				if (vv < Math.pow(10, 2)) {
+					color = 'orange';
+				} else if (vv > Math.pow(10, 2)) {
+					color = 'red';
+				} else {
+					color = 'grey';
+				}
+			} else if (key === "Pg") {
+				if (vv < Math.pow(10, 3)) {
+					color = 'orange';
+				} else if (vv > Math.pow(10, 3)) {
+					color = 'red';
+				} else {
+					color = 'grey';
+				}
+			} else if (key === "Td" || key === "Tf") {
+				if (vv < Math.pow(10, 3)) {
+					color = 'green';
+				} else if (vv > Math.pow(10, 5)) {
+					color = 'red';
+				} else {
+					color = 'orange';
+				}
+			} else if (key === "Fn") {
+				if (vv < Math.pow(10, 6)) {
+					color = 'green';
+				} else if (vv > Math.pow(10, 7)) {
+					color = 'red';
+				} else {
+					color = 'orange';
+				}
+			}
+			return {
+				y: v_st === 0 ? 0.1 : v_st,
+				color: {
+					linearGradient: {
+						x1: 0,
+						x2: 0,
+						y1: 0,
+						y2: 1
+					},
+					stops: [
+						[0, colors[color].from],
+						[1, colors[color].to]
+					]
+				}
+			};
 		});
 
 		const chartData = Object.keys(rawData).map(key => {
-			const v_st = parseInt(Math.log10(rawData[key].val));
-			const v_nd = rawData[key].val / Math.pow(10, v_st);
-			return { 
+			const v_st = parseInt(Math.log10(rawData[key]));
+			const v_nd = rawData[key] / Math.pow(10, v_st);
+			return {
+				vv : rawData[key],
 				v_st: v_st,
 				v_nd: v_nd,
-				color: rawData[key].color,
-				rate: rawData[key].rate,
+				rate: rawDataRate[key],
 			};
 		});
 
@@ -164,12 +168,13 @@ class ColumnChart extends Component {
 						useHTML: true,
 						formatter: function () {
 							const xx = this.point.x;
+							const vv = chartData[xx].vv;
 							const v_st = chartData[xx].v_st;
 							const v_nd = chartData[xx].v_nd;
 							const rate = chartData[xx].rate;
 							const bytes = "<div style='font-weight:600;'>"
 								+ "<div style='font-size:" + (v_st === 0 ? 10 : (isSmall ? 10 : 12)) + "px;color:#0B0B0B;text-align:center;'>"
-								+		(v_st === 0 ? "Not Detected" : (v_nd + "  x  10<sup>" + v_st + "</sup>"))
+								+		((xx === 0 && vv < 10) || (xx !== 0 && vv < 100) ? "Not Detected" : (v_nd + "  x  10<sup>" + v_st + "</sup>"))
 								+ "</div>"
 								+ "<div style='font-size:" + (isSmall ? 8 : 10) + "px;color:" + (rate > 0 ? '#F13737' : '#219653') + ";text-align:center;'>"
 								+ 		(rate > 0 ? "+" : "") + rate.toFixed(2) +"%"
