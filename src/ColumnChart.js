@@ -37,39 +37,46 @@ class ColumnChart extends Component {
 			const vv = rawData[key];
 			const v_st = parseInt(Math.log10(vv));
 			let color = null;
-			if (key === "Aa") {
-				if (vv < Math.pow(10, 2)) {
-					color = 'orange';
-				} else if (vv > Math.pow(10, 2)) {
-					color = 'red';
-				} else {
-					color = 'grey';
-				}
-			} else if (key === "Pg") {
-				if (vv < Math.pow(10, 3)) {
-					color = 'orange';
-				} else if (vv > Math.pow(10, 3)) {
-					color = 'red';
-				} else {
-					color = 'grey';
-				}
-			} else if (key === "Td" || key === "Tf") {
-				if (vv < Math.pow(10, 3)) {
-					color = 'green';
-				} else if (vv > Math.pow(10, 5)) {
-					color = 'red';
-				} else {
-					color = 'orange';
-				}
-			} else if (key === "Fn") {
-				if (vv < Math.pow(10, 6)) {
-					color = 'green';
-				} else if (vv > Math.pow(10, 7)) {
-					color = 'red';
-				} else {
-					color = 'orange';
+			if ( (key === "Aa" && vv < 10) || (key !== "Aa" && vv < 100) ) {
+				color = 'grey';
+			} else {
+				if (key === "Aa") {
+					if (vv < 10) {
+						color = 'grey';
+					} else if (vv < Math.pow(10, 2)) {
+						color = 'orange';
+					} else if (vv > Math.pow(10, 2)) {
+						color = 'red';
+					} else {
+						color = 'grey';
+					}
+				} else if (key === "Pg") {
+					if (vv < Math.pow(10, 3)) {
+						color = 'orange';
+					} else if (vv > Math.pow(10, 3)) {
+						color = 'red';
+					} else {
+						color = 'grey';
+					}
+				} else if (key === "Td" || key === "Tf") {
+					if (vv < Math.pow(10, 3)) {
+						color = 'green';
+					} else if (vv > Math.pow(10, 5)) {
+						color = 'red';
+					} else {
+						color = 'orange';
+					}
+				} else if (key === "Fn") {
+					if (vv < Math.pow(10, 6)) {
+						color = 'green';
+					} else if (vv > Math.pow(10, 7)) {
+						color = 'red';
+					} else {
+						color = 'orange';
+					}
 				}
 			}
+
 			return {
 				y: v_st === 0 ? 0.1 : v_st,
 				color: {
