@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 
@@ -31,25 +31,13 @@ class LineChart2 extends Component {
 		const yAxisMax = 500;
 		const yAxisMin = 0;
 
-		const isSmall = global.window.innerWidth <= 640 ? true : false;
-		this.isWindowSmall = isSmall;
-
-		const yAxisGridLines = [...Array(6).keys()].map(idx => {
-			return {
-				type: 'line',
-				lineWidth: idx === 0 ? 2 : 1,
-				opacity: idx === 0 ? 1 : 0.5,
-				zIndex: 4,
-				data: categories.map(() => idx * 100)
-			};
-		})
+		this.isWindowSmall = global.window.innerWidth <= 640 ? true : false;
 
 		this.chartOptions = {
 			chart: {
-				marginRight: 20,
 				style: {
 					fontFamily: 'Poppins'
-				}
+				},
 			},
 			title: {
 				text: ''
@@ -67,7 +55,10 @@ class LineChart2 extends Component {
 						fontSize: 14
 					}
 				},
-				gridLineWidth: 0,
+				plotLines: [{
+					value: 0,
+				}],
+				gridLineColor: 'rgba(186,196,207,0.2)'
 			},
 		
 			xAxis: {
@@ -82,7 +73,6 @@ class LineChart2 extends Component {
 							+ "</div>"
 					}
 				},
-				offset: 20,
 				lineWidth: 0,
 			},
 		
@@ -99,8 +89,8 @@ class LineChart2 extends Component {
                             y2: 1
                         },
                         stops: [
-                            [0, "#82a0c0"],
-                            [1, "#ffffff"]
+                            [0, "rgba(130,160,192,0.8)"],
+                            [1, "rgba(255,255,255,0.2)"]
                         ]
                     },
                     marker: {
@@ -132,15 +122,12 @@ class LineChart2 extends Component {
 						}
 					}
 				},
-				series: {
-					pointPlacement: "on"
-				}
 			},
 			series: [{
 				type: 'area',
 				name: 'Orders',
 				data: seriesData,
-				zIndex: 2
+				zIndex: -1
 			}, {
 				type: 'line',
 				name: 'Orders',
@@ -156,8 +143,7 @@ class LineChart2 extends Component {
 				},
 				enableMouseTracking: true,
 				data: seriesData,
-				zIndex: 6
-			}, ...yAxisGridLines],
+			}],
 			credits: {
 				enabled: false
 			},
