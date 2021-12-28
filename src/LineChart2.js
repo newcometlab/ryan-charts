@@ -52,7 +52,8 @@ class LineChart2 extends Component {
 				},
 				labels: {
 					style: {
-						fontSize: 14
+						fontSize: 14,
+						color:"#BAC4CF"
 					}
 				},
 				plotLines: [{
