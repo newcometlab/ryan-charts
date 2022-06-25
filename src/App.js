@@ -1,10 +1,18 @@
-import React, { Component } from "react";
-import { BrowserRouter, Switch , Route, Link } from "react-router-dom";
 import './App.css';
-import LineChart from "./LineChart";
-import RadialChart from "./RadialChart";
-import ColumnChart from "./ColumnChart";
-import LineChart2 from "./LineChart2";
+
+import React, { Component } from 'react';
+
+import {
+  BrowserRouter,
+  Link,
+  Route,
+  Switch,
+} from 'react-router-dom';
+
+import ColumnChart from './ColumnChart';
+import LineChart from './LineChart';
+import LineChart2 from './LineChart2';
+import RadialChart from './RadialChart';
 
 class App extends Component {
   render() {
@@ -16,32 +24,32 @@ class App extends Component {
               className="App-link"
               to="/linechart"
             >
-              LineChart
+              GradientLineChart
             </Link>
             <Link
               className="App-link"
               to="/radialchart"
             >
-              RadialChart
+              RadialProgressChart
             </Link>
             <Link
               className="App-link"
               to="/columnchart"
             >
-              ColumnChart
+              RoundedBarChart
             </Link>
             <Link
               className="App-link"
-              to="/linechart2"
+              to="/areachart"
             >
-              LineChart2
+              GradientAreaChart
             </Link>
           </header>
           <Switch>
             <Route path="/linechart" component={LineChart} />
             <Route path="/radialchart" component={RadialChart} />
             <Route path="/columnchart" component={ColumnChart} />
-            <Route path="/linechart2" component={LineChart2} />
+            <Route path="/areachart" component={LineChart2} />
             <Route path="/" component={ColumnChart} />
           </Switch>
         </BrowserRouter>
